@@ -39,10 +39,10 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 1.2: State & Transport (Frontend)
 **Goal:** Connect Frontend to Backend via strongly typed invokes and stores.
 **Tasks:**
-- [ ] **Task 1.1**: Define TypeScript types (Node, Edge).
-- [ ] **Task 1.5**: Create `lib/tauri.ts` wrapper.
-- [ ] **Task 1.6**: Implement `useEditorStore` (Zustand).
-- [ ] **Task 1.10**: Implement `useAppStore` (Theme/Sidebar).
+- [x] **Task 1.1**: Define TypeScript types (Node, Edge).
+- [x] **Task 1.5**: Create `lib/tauri.ts` wrapper.
+- [x] **Task 1.6**: Implement `useEditorStore` (Zustand).
+- [x] **Task 1.10**: Implement `useAppStore` (Theme/Sidebar).
 **Output:** Frontend can theoretically call backend (verify via console).
 
 ### Mission 1.3: The Editor

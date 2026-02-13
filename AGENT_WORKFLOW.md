@@ -31,9 +31,9 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 1.1: Data Layer (Rust)
 **Goal:** Implement the SQLite database and basic Node operations.
 **Tasks:**
-- [ ] **Task 1.2**: DB Init & Migrations (Tables: `nodes`, `edges`).
-- [ ] **Task 1.3**: Implement Node CRUD Commands (`create_node`, `get_node`, etc.).
-- [ ] **Task 1.4**: Implement FS Workspace Manager (Handle `.md` files).
+- [x] **Task 1.2**: DB Init & Migrations (Tables: `nodes`, `edges`).
+- [x] **Task 1.3**: Implement Node CRUD Commands (`create_node`, `get_node`, etc.).
+- [x] **Task 1.4**: Implement FS Workspace Manager (Handle `.md` files).
 **Output:** Rust backend compiles. Database `library.db` is created on run.
 
 ### Mission 1.2: State & Transport (Frontend)

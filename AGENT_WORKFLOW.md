@@ -11,9 +11,9 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 0.1: Project Genesis
 **Goal:** Initialize the raw Tauri + React + Tailwind project.
 **Tasks:**
-- [ ] **Task 0.1**: Run `npm create tauri-app` (React/TS).
-- [ ] **Task 0.4**: Add `.gitignore`.
-- [ ] **Task 0.2**: Configure Tailwind CSS & PostCSS.
+- [x] **Task 0.1**: Run `npm create tauri-app` (React/TS).
+- [x] **Task 0.4**: Add `.gitignore`.
+- [x] **Task 0.2**: Configure Tailwind CSS & PostCSS.
 **Output:** A running Tauri app with Tailwind styles (`npm run tauri dev` works).
 
 ### Mission 0.2: Skeleton & Dependencies

@@ -268,15 +268,19 @@ Validation:
 - Re-opening the same node restores content exactly
 Dependencies: Task 0.5, Task 1.6
 ---
-Task 1.8 — Build MainLayout with split pane
+Task 1.8 — Build Dashboard & MainLayout
 Files:
 - src/layouts/MainLayout.tsx — Split-pane layout (sidebar + main area)
 - src/components/ui/Sidebar.tsx — Navigation sidebar (Home, Projects, Search, Settings icons)
-Purpose: Per DOCS_FRONTEND.md Section 8.D — collapsible sidebar with icon navigation. Main content area hosts either the Dashboard, Canvas, or Editor.
+- src/components/dashboard/HeroInput.tsx — Large input: "What do you want to research today?" (initially disabled or just logs to console)
+- src/components/dashboard/RecentProjects.tsx — Placeholder grid
+- src/routes/DashboardPage.tsx — Compose HeroInput + RecentProjects
+Purpose: Per DOCS_FRONTEND.md Section 8 — the Dashboard is the entry point. Even if "Deep Research" isn't ready, the UI should be there.
 Validation:
+- App launches to the Dashboard
 - Sidebar renders and collapses
-- Navigation items are clickable (routing comes in Task 1.9)
-- Layout is responsive
+- Navigation items are clickable
+- HeroInput renders
 Dependencies: Task 0.2
 ---
 Task 1.9 — Set up React Router
@@ -614,19 +618,17 @@ Validation:
 - On completion, user can view the generated artifact
 Dependencies: Task 4.3, Task 4.4
 ---
-Task 4.6 — Build the Dashboard page
+Task 4.6 — Integrate Agent into Dashboard (Connect Functionality)
 Files:
-- src/components/dashboard/HeroInput.tsx — Large input: "What do you want to research today?"
-- src/components/dashboard/RecentProjects.tsx — Grid of project cards with thumbnails
-- src/components/dashboard/ProjectCard.tsx — Individual project card (title, date, node count)
-- src/routes/DashboardPage.tsx — Compose HeroInput + RecentProjects + Quick Actions
-Purpose: Per DOCS_FRONTEND.md Section 8.A — the command center.
+- src/routes/DashboardPage.tsx — Enable the "Mission Config" functionality
+- src/components/dashboard/HeroInput.tsx — Connect "Enter" key to Mission Config modal
+- Ensure RecentProjects.tsx loads data from DB (Task 1.3)
+Purpose: Connect the Dashboard UI (built in Task 1.8) to the backend Agent logic (built in Task 4.3).
 Validation:
-- Dashboard renders on /
-- HeroInput accepts text and opens MissionConfig
-- Recent projects show saved project boards
-- "New Project" quick action works
-Dependencies: Task 1.9, Task 4.4
+- Typing in HeroInput triggers the Mission Config modal
+- "Start Mission" launches the Agent HUD
+- Recent projects show actual saved data
+Dependencies: Task 1.8, Task 4.4, Task 4.5
 ---
 Task 4.7 — Build Settings page
 File: src/routes/SettingsPage.tsx

@@ -19,9 +19,9 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 0.2: Skeleton & Dependencies
 **Goal:** scaffolding the directory structure and installing core libraries.
 **Tasks:**
-- [ ] **Task 0.3**: Create full folder structure (Frontend `src/` & Backend `src-tauri/src/`).
-- [ ] **Task 0.5**: Install frontend deps (Zustand, ReactFlow, Tiptap).
-- [ ] **Task 0.6**: Install Rust deps (Rusqlite, Tokio, Serde).
+- [x] **Task 0.3**: Create full folder structure (Frontend `src/` & Backend `src-tauri/src/`).
+- [x] **Task 0.5**: Install frontend deps (Zustand, ReactFlow, Tiptap).
+- [x] **Task 0.6**: Install Rust deps (Rusqlite, Tokio, Serde).
 **Output:** Project compiles (both Rust & JS side). All folders exist.
 
 ---

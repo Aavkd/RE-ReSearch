@@ -48,9 +48,9 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 1.3: The Editor
 **Goal:** Build the Markdown editor UI and connect it to the file system.
 **Tasks:**
-- [ ] **Task 1.7**: Build Tiptap `ArtifactEditor` & `Toolbar`.
-- [ ] **Task 1.8**: Build `MainLayout` & `Sidebar`.
-- [ ] **Task 1.9**: Setup React Router routes.
+- [x] **Task 1.7**: Build Tiptap `ArtifactEditor` & `Toolbar`.
+- [x] **Task 1.8**: Build `MainLayout` & `Sidebar`.
+- [x] **Task 1.9**: Setup React Router routes.
 **Output:** User can create, edit, and save a Markdown note in the UI.
 
 ---

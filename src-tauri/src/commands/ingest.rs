@@ -66,7 +66,7 @@ pub async fn ingest_url(
 
     let chunks = chunk_text(&text_content, 1000); // 1000 char chunks
 
-    let conn = state.0.lock().unwrap();
+    let conn = state.get_connection().map_err(|e| e.to_string())?;
 
     // 1. Create Source Node
     let node_id = Uuid::new_v4().to_string();

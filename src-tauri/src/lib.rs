@@ -1,5 +1,6 @@
 use tauri::Manager;
 
+pub mod ai;
 pub mod commands;
 pub mod db;
 pub mod fs_manager;

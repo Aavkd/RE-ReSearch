@@ -51,9 +51,12 @@ pub fn index_node(conn: &Connection, node_id: &str, title: &str, content: &str, 
         // println!("Warning: Embedding dimension mismatch");
     }
 
+    // Serialize the embedding to a JSON string for sqlite-vec
+    let embedding_json = serde_json::to_string(embedding).map_err(|e| rusqlite::Error::ToSqlConversionFailure(Box::new(e)))?;
+
     conn.execute(
         "INSERT INTO nodes_vec (node_id, embedding) VALUES (?1, ?2)",
-        (node_id, embedding), // rusqlite might need a specific wrapper for float arrays depending on the extension binding
+        rusqlite::params![node_id, embedding_json],
     )?;
 
     Ok(())

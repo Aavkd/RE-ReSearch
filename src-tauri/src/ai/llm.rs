@@ -13,7 +13,7 @@ pub async fn complete(prompt: String, model: Option<String>) -> Result<String, S
     let ollama_url = "http://localhost:11434/api/generate";
     let client = Client::new();
     
-    let model_name = model.unwrap_or_else(|| "llama3".to_string()); // Default model
+    let model_name = model.unwrap_or_else(|| "ministral-3:8b".to_string()); // Default model
 
     let body = serde_json::json!({
         "model": model_name,
@@ -46,7 +46,7 @@ pub async fn chat(messages: Vec<ChatMessage>, model: Option<String>) -> Result<S
     let ollama_url = "http://localhost:11434/api/chat";
     let client = Client::new();
     
-    let model_name = model.unwrap_or_else(|| "llama3".to_string());
+    let model_name = model.unwrap_or_else(|| "ministral-3:8b".to_string());
 
     let body = serde_json::json!({
         "model": model_name,

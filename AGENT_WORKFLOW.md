@@ -109,10 +109,10 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 4.2: Agent UI (HUD)
 **Goal:** Build the frontend interface for controlling the agent.
 **Tasks:**
-- [ ] **Task 4.4**: Build `MissionConfig` modal.
-- [ ] **Task 4.5**: Build `AgentHUD` (Live logs, progress steps).
-- [ ] **Task 4.6**: Integrate into Dashboard.
-- [ ] **Task 4.7**: Build `SettingsPage` (LLM Config).
+- [x] **Task 4.4**: Build `MissionConfig` modal.
+- [x] **Task 4.5**: Build `AgentHUD` (Live logs, progress steps).
+- [x] **Task 4.6**: Integrate into Dashboard.
+- [x] **Task 4.7**: Build `SettingsPage` (LLM Config).
 **Output:** Full "Deep Research" loop is functional from the UI.
 
 ---

@@ -69,5 +69,5 @@ pub async fn chat(
     });
 
     // 4. Call LLM
-    llm_chat(final_messages, Some("llama3".to_string())).await
+    llm_chat(final_messages, Some("ministral-3:8b".to_string())).await
 }

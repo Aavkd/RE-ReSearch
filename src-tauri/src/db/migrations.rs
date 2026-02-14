@@ -29,5 +29,8 @@ pub fn run_migrations(conn: &Connection) -> Result<()> {
         [],
     )?;
 
+    // Initialize Vector Search Tables (sqlite-vec & FTS5)
+    super::vec::init_vector_tables(conn)?;
+
     Ok(())
 }

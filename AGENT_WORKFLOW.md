@@ -79,9 +79,9 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 3.1: Ingestion Engine (Rust)
 **Goal:** Build the scraping and vector database infrastructure.
 **Tasks:**
-- [ ] **Task 3.1**: Integrate `sqlite-vec` & FTS5.
-- [ ] **Task 3.2**: Build Web Scraper (Fetcher + Readability + Chunker).
-- [ ] **Task 3.3**: Implement Embedding Pipeline (Ollama support).
+- [x] **Task 3.1**: Integrate `sqlite-vec` & FTS5.
+- [x] **Task 3.2**: Build Web Scraper (Fetcher + Readability + Chunker).
+- [x] **Task 3.3**: Implement Embedding Pipeline (Ollama support).
 **Output:** Backend can scrape a URL and vector-embed the content.
 
 ### Mission 3.2: Search & Chat

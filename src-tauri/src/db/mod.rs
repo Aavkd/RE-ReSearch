@@ -4,6 +4,7 @@ use std::fs;
 use tauri::{AppHandle, Manager};
 
 pub mod migrations;
+pub mod vec;
 
 pub struct DbState {
     pub db_path: PathBuf,

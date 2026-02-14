@@ -101,9 +101,9 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 4.1: Agent Brain (Python)
 **Goal:** Set up the LangGraph sidecar and basic tools.
 **Tasks:**
-- [ ] **Task 4.1**: Setup Python environment & `agent.py` server.
-- [ ] **Task 4.2**: Define Agent Tools (Search, Read, Save).
-- [ ] **Task 4.3**: Implement Streaming Events (SSE -> Tauri Events).
+- [x] **Task 4.1**: Setup Python environment & `agent.py` server.
+- [x] **Task 4.2**: Define Agent Tools (Search, Read, Save).
+- [x] **Task 4.3**: Implement Streaming Events (SSE -> Tauri Events).
 **Output:** Python agent runs alongside Tauri and can execute tools.
 
 ### Mission 4.2: Agent UI (HUD)

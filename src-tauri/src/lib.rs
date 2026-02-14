@@ -23,7 +23,7 @@ pub fn run() {
                 },
                 Err(e) => {
                     eprintln!("Error initializing database: {}", e);
-                    Err(Box::new(e))
+                    Err(e)
                 }
             }
         })

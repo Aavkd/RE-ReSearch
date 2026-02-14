@@ -39,19 +39,22 @@ pub async fn ingest_url(
     let resp = client.get(&url).send().await.map_err(|e| e.to_string())?;
     let html_content = resp.text().await.map_err(|e| e.to_string())?;
 
-    let document = Html::parse_document(&html_content);
-    
-    // Extract title
-    let title_selector = Selector::parse("title").unwrap();
-    let title = document.select(&title_selector).next().map(|e| e.text().collect::<String>()).unwrap_or("Untitled".to_string());
+    let (title, text_content) = {
+        let document = Html::parse_document(&html_content);
+        
+        // Extract title
+        let title_selector = Selector::parse("title").unwrap();
+        let title = document.select(&title_selector).next().map(|e| e.text().collect::<String>()).unwrap_or("Untitled".to_string());
 
-    // Extract body text
-    let p_selector = Selector::parse("p").unwrap(); 
-    let mut text_content = String::new();
-    for element in document.select(&p_selector) {
-        text_content.push_str(&element.text().collect::<Vec<_>>().join(" "));
-        text_content.push_str("\n\n");
-    }
+        // Extract body text
+        let p_selector = Selector::parse("p").unwrap(); 
+        let mut text_content = String::new();
+        for element in document.select(&p_selector) {
+            text_content.push_str(&element.text().collect::<Vec<_>>().join(" "));
+            text_content.push_str("\n\n");
+        }
+        (title, text_content)
+    };
 
     // Determine embedding provider
     let embedding_provider = match provider.as_str() {

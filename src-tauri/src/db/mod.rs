@@ -24,6 +24,13 @@ pub fn init(app_handle: &AppHandle) -> Result<DbState, Box<dyn std::error::Error
     
     let db_path = app_dir.join("research.db");
     
+    // Load sqlite-vec extension
+    unsafe {
+        let _ = rusqlite::ffi::sqlite3_auto_extension(Some(std::mem::transmute(
+            sqlite_vec::sqlite3_vec_init as *const (),
+        )));
+    }
+
     // Connect to run migrations
     let conn = Connection::open(&db_path)?;
     migrations::run_migrations(&conn)?;

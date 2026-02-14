@@ -21,6 +21,8 @@ pub fn create_node(
     let content_path = None; // Start without content
     let meta_json = metadata.unwrap_or(json!({}).to_string());
 
+    let meta_json_value: serde_json::Value = serde_json::from_str(&meta_json).unwrap_or(json!({}));
+
     conn.execute(
         "INSERT INTO nodes (id, node_type, title, content_path, metadata, created_at, updated_at)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
@@ -32,7 +34,7 @@ pub fn create_node(
         node_type,
         title,
         content_path: content_path.map(|s: String| s),
-        metadata: Some(meta_json),
+        metadata: Some(meta_json_value),
         created_at: now.clone(),
         updated_at: now,
     })
@@ -47,12 +49,15 @@ pub fn get_node(state: State<DbState>, id: String) -> Result<Option<Node>, Strin
     ).map_err(|e| e.to_string())?;
     
     let node = stmt.query_row(params![id], |row| {
+        let metadata_str: Option<String> = row.get(4)?;
+        let metadata = metadata_str.and_then(|s| serde_json::from_str(&s).ok());
+
         Ok(Node {
             id: row.get(0)?,
             node_type: row.get(1)?,
             title: row.get(2)?,
             content_path: row.get(3)?,
-            metadata: row.get(4)?,
+            metadata,
             created_at: row.get(5)?,
             updated_at: row.get(6)?,
         })

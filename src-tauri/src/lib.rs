@@ -6,6 +6,7 @@ pub mod fs_manager;
 pub mod models;
 
 use commands::nodes::{create_node, get_node, save_node_content, delete_node};
+use commands::graph::{connect_nodes, disconnect_nodes, get_graph_data, update_node_position};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -27,7 +28,11 @@ pub fn run() {
             create_node,
             get_node,
             save_node_content,
-            delete_node
+            delete_node,
+            connect_nodes,
+            disconnect_nodes,
+            get_graph_data,
+            update_node_position
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

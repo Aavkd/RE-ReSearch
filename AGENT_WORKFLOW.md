@@ -60,16 +60,16 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 2.1: Graph Logic
 **Goal:** Implement the graph data structure and backend commands.
 **Tasks:**
-- [ ] **Task 2.2**: Implement Graph Commands (`connect_nodes`, `get_graph`).
-- [ ] **Task 2.1**: Implement `useCanvasStore`.
+- [x] **Task 2.2**: Implement Graph Commands (`connect_nodes`, `get_graph`).
+- [x] **Task 2.1**: Implement `useCanvasStore`.
 **Output:** Backend can store/retrieve edges. Store handles graph state.
 
 ### Mission 2.2: CrazyBoard UI
 **Goal:** Build the React Flow canvas with custom nodes.
 **Tasks:**
-- [ ] **Task 2.3**: Build Custom Nodes (`DocumentNode`, `SourceNode`, etc.).
-- [ ] **Task 2.4**: Build `CrazyBoard` component (DnD, Controls).
-- [ ] **Task 2.5**: Integrate into `ProjectView` (Split pane: Canvas + Editor).
+- [x] **Task 2.3**: Build Custom Nodes (`DocumentNode`, `SourceNode`, etc.).
+- [x] **Task 2.4**: Build `CrazyBoard` component (DnD, Controls).
+- [x] **Task 2.5**: Integrate into `ProjectView` (Split pane: Canvas + Editor).
 **Output:** Drag-and-drop graph interface works. Double-click opens editor.
 
 ---

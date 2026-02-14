@@ -87,11 +87,11 @@ Each mission is a self-contained unit of work for an autonomous agent.
 ### Mission 3.2: Search & Chat
 **Goal:** Implement semantic search and RAG chat.
 **Tasks:**
-- [ ] **Task 3.4**: Implement `ingest_url` command.
-- [ ] **Task 3.5**: Implement `search_nodes` command (Hybrid search).
-- [ ] **Task 3.6**: Build `SearchDialog` UI.
-- [ ] **Task 3.7**: Implement RAG `chat` command.
-- [ ] **Task 3.8**: Build `ChatPanel` UI.
+- [x] **Task 3.4**: Implement `ingest_url` command.
+- [x] **Task 3.5**: Implement `search_nodes` command (Hybrid search).
+- [x] **Task 3.6**: Build `SearchDialog` UI.
+- [x] **Task 3.7**: Implement RAG `chat` command.
+- [x] **Task 3.8**: Build `ChatPanel` UI.
 **Output:** User can search workspace (Cmd+K) and chat with sources.
 
 ---

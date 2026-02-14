@@ -7,6 +7,9 @@ pub mod models;
 
 use commands::nodes::{create_node, get_node, save_node_content, delete_node};
 use commands::graph::{connect_nodes, disconnect_nodes, get_graph_data, update_node_position};
+use commands::ingest::ingest_url;
+use commands::search::search_nodes;
+use commands::chat::chat;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -32,7 +35,10 @@ pub fn run() {
             connect_nodes,
             disconnect_nodes,
             get_graph_data,
-            update_node_position
+            update_node_position,
+            ingest_url,
+            search_nodes,
+            chat
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

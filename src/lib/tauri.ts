@@ -1,5 +1,16 @@
-import { invoke } from '@tauri-apps/api/core';
+import { invoke as tauriInvoke } from '@tauri-apps/api/core';
 import { Node, Edge, NodeType } from '../types';
+
+// Wrapper to prevent crashes in non-Tauri environments
+const invoke = async <T>(cmd: string, args?: any): Promise<T> => {
+  if (typeof window === 'undefined' || !('__TAURI__' in window)) {
+    console.warn(`[Tauri] Skipping invoke('${cmd}') - not in Tauri environment`);
+    // Return a dummy promise that never resolves or rejects immediately?
+    // Rejecting is better so callers can handle it.
+    return Promise.reject("Tauri environment not detected");
+  }
+  return tauriInvoke(cmd, args);
+};
 
 export const createNode = async (title: string, type: NodeType): Promise<Node> => {
   return await invoke<Node>('create_node', { title, type });

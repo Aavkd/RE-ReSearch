@@ -22,33 +22,35 @@ pub async fn chat(
     let embedding = embed_text(&message, &provider).await?;
     let embedding_json = serde_json::to_string(&embedding).map_err(|e| e.to_string())?;
 
-    let conn = state.get_connection().map_err(|e| e.to_string())?;
-    
-    // Search for top 3 relevant chunks
-    let mut stmt = conn.prepare(
-        "SELECT n.title, n.content_path, fts.content, v.distance
-         FROM nodes_vec v
-         JOIN nodes n ON v.node_id = n.id
-         JOIN nodes_fts fts ON n.id = fts.id
-         WHERE v.embedding MATCH ?
-         ORDER BY v.distance
-         LIMIT 3"
-    ).map_err(|e| e.to_string())?;
+    let context = {
+        let conn = state.get_connection().map_err(|e| e.to_string())?;
+        
+        // Search for top 3 relevant chunks
+        let mut stmt = conn.prepare(
+            "SELECT n.title, n.content_path, fts.content, v.distance
+             FROM nodes_vec v
+             JOIN nodes n ON v.node_id = n.id
+             JOIN nodes_fts fts ON n.id = fts.id
+             WHERE v.embedding MATCH ?
+             ORDER BY v.distance
+             LIMIT 3"
+        ).map_err(|e| e.to_string())?;
 
-    let context_rows = stmt.query_map(params![embedding_json], |row| {
-        let title: String = row.get(0)?;
-        let content: String = row.get(2)?; 
-        Ok(format!("Title: {}\nContent: {}\n", title, content))
-    }).map_err(|e| e.to_string())?;
+        let context_rows = stmt.query_map(params![embedding_json], |row| {
+            let title: String = row.get(0)?;
+            let content: String = row.get(2)?; 
+            Ok(format!("Title: {}\nContent: {}\n", title, content))
+        }).map_err(|e| e.to_string())?;
 
-    let mut context_parts = Vec::new();
-    for row in context_rows {
-        if let Ok(c) = row {
-            context_parts.push(c);
+        let mut context_parts = Vec::new();
+        for row in context_rows {
+            if let Ok(c) = row {
+                context_parts.push(c);
+            }
         }
-    }
 
-    let context = context_parts.join("\n---\n");
+        context_parts.join("\n---\n")
+    }; // conn is dropped here
 
     // 2. Construct System Prompt
     let system_prompt = format!(

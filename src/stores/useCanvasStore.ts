@@ -36,6 +36,12 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
     });
   },
   loadGraph: async () => {
+    // Guard: Ensure we are in a Tauri environment
+    if (typeof window === 'undefined' || !('__TAURI__' in window)) {
+        console.warn('loadGraph skipped: Not in Tauri environment');
+        return;
+    }
+
     try {
       const payload = await getGraphData();
       

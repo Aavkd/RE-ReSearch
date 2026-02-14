@@ -69,14 +69,12 @@ pub async fn ingest_url(
 
     let chunks = chunk_text(&text_content, 1000); // 1000 char chunks
 
-    let conn = state.get_connection().map_err(|e| e.to_string())?;
-
-    // 1. Create Source Node
+    // 1. Prepare Data & Artifacts (Async/Sync, No DB Lock)
     let node_id = Uuid::new_v4().to_string();
     let now = Utc::now().to_rfc3339();
     let node_type = "source".to_string();
 
-    // Save content to file (optional, but good for retrieval)
+    // Save content to file
     let ws = Workspace::new().map_err(|e| e.to_string())?;
     let filename = format!("{}.md", node_id);
     ws.write_artifact(&filename, text_content.as_bytes()).map_err(|e| e.to_string())?;
@@ -87,41 +85,39 @@ pub async fn ingest_url(
         "provider": provider
     });
 
-    conn.execute(
-        "INSERT INTO nodes (id, node_type, title, content_path, metadata, created_at, updated_at)
-         VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
-        rusqlite::params![node_id, node_type, title, filename, metadata.to_string(), now, now],
-    ).map_err(|e| e.to_string())?;
-
-    // 2. Process Chunks
-    for (i, chunk) in chunks.iter().enumerate() {
-        // Embed chunk
+    // 2. Compute Embeddings (Async, No DB Lock)
+    let mut chunk_embeddings = Vec::new();
+    for chunk in &chunks {
         let embedding = embed_text(chunk, &embedding_provider).await?;
-
-        // Index chunk (Vector + FTS)
-        // We use a composite ID for chunks or just index them associated with the node
-        // The `nodes_vec` table schema is (id, node_id, embedding). 
-        // We also need FTS. `nodes_fts` is (id, title, content).
-        // For FTS, we might want to index the whole document under the node_id, 
-        // or index chunks individually. The schema suggests `nodes_fts` uses `id` which is `UNINDEXED` but likely correlates to `nodes.id`.
-        // If we want chunk-level search, we might need a separate table or a way to store chunk ID.
-        // For now, let's index the *whole document* content into FTS once, and vectors for chunks.
-        
-        // Vector Insert
-        // Serialize embedding to JSON string for sqlite-vec compatibility
         let embedding_json = serde_json::to_string(&embedding).map_err(|e| e.to_string())?;
-
-        conn.execute(
-            "INSERT INTO nodes_vec (node_id, embedding) VALUES (?1, ?2)",
-            rusqlite::params![node_id, embedding_json], 
-        ).map_err(|e| e.to_string())?;
+        chunk_embeddings.push(embedding_json);
     }
 
-    // Index full text for FTS
-    conn.execute(
-        "INSERT INTO nodes_fts (id, title, content) VALUES (?1, ?2, ?3)",
-        rusqlite::params![node_id, title, text_content],
-    ).map_err(|e| e.to_string())?;
+    // 3. Database Operations (Sync Block, DB Lock Held Here)
+    {
+        let conn = state.get_connection().map_err(|e| e.to_string())?;
+
+        // Insert Node
+        conn.execute(
+            "INSERT INTO nodes (id, node_type, title, content_path, metadata, created_at, updated_at)
+             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
+            rusqlite::params![node_id, node_type, title, filename, metadata.to_string(), now, now],
+        ).map_err(|e| e.to_string())?;
+
+        // Insert Vectors
+        for embedding_json in chunk_embeddings {
+            conn.execute(
+                "INSERT INTO nodes_vec (node_id, embedding) VALUES (?1, ?2)",
+                rusqlite::params![node_id, embedding_json], 
+            ).map_err(|e| e.to_string())?;
+        }
+
+        // Insert FTS
+        conn.execute(
+            "INSERT INTO nodes_fts (id, title, content) VALUES (?1, ?2, ?3)",
+            rusqlite::params![node_id, title, text_content],
+        ).map_err(|e| e.to_string())?;
+    } // conn is dropped here
 
     Ok(Node {
         id: node_id,
